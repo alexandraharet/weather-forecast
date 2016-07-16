@@ -1,0 +1,11 @@
+
+- in my HTML:
+	- add div with class 'weatherInfo'
+	- inside this div with class 'weatherInfo', create divs with id's = [JSON property];
+
+- in my javascript:
+	- iterate in all the divs which are children of div with class 'weatherInfo';
+	- retrieve the div ID
+	- based on div ID, fetch JSON value of the property = ID;
+
+ 
