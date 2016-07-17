@@ -1,47 +1,69 @@
+<!DOCTYPE html>
 <html lang="en-US">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html">
-  <title>Forecast project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Alexandra Haret">
-  <link rel="stylesheet" type="text/css" media="all" href="css/styles.css">
+  <title>Forecast project</title>
+  <link rel="stylesheet" type="text/css" media="all" href="styles.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/ajax.js"></script>
 </head>
 
 <body>
-	<h1>Forecast</h1>
+  <div id="current-view" class="box day">
+	<h1>Weather forecast</h1>
 
   <form action = "" name="address">
-  <h1>Type in an address a location</h1>
+  <p>Type in an address</p>
     <input type="text" name="inputaddress" id="address">
-    <input type="button" id="myButton" value="Show weather">
+    <button type="submit" id="myButton" class="search-button"><img src="img/search-icon.png" style="height: 15px; width: 15px;"></button>
   </form>
-
-<!--  <fieldset>
-    <select id = "selectCity">
-       <option value = "Edinburgh">Edinburgh</option>
-       <option value = "Bucharest">Bucharest</option>
-       <option value = "Rome">Rome</option>
-       <option value = "Barlad">Barlad</option>
-       <option value = "Reggio%20Calabria">Reggio Calabria</option>
-    </select>
-    <input type = "button" id = "myButton" value = "Show weather" />
-  </fieldset> -->
  </form>
 
-<!-- <div><a href="#" id="myButton">Click me</a></div> -->
-  <div class="weather">
+  <div class="weather-info currently">
+    <div id="summary"></div>
     <div id="icon"></div>
     <div id="temperature"></div>
-    <div id="visibility"></div>
-    <div id="pressure"></div>
-    <div id="humidity"></div>
-
-    <div id=""></div>
-    <div id=""></div>
-
-
+    <div id="apparentTemperature"></div>
+    <div id="precipProbability"></div>
+    <div id="windSpeed"></div>
+    <div id="windBearing"></div>
   </div>
+
+  <div class="weather-info tonight">
+    <div id="summary"></div>
+    <div id="icon"></div>
+    <div id="temperature"></div>
+    <div id="apparentTemperature"></div>
+    <div id="precipProbability"></div>
+    <div id="windSpeed"></div>
+    <div id="windBearing"></div>
+  </div>
+
+  <div class="weather-info tomorrow">
+    <div id="summary"></div>
+    <div id="icon"></div>
+    <div id="temperature"></div>
+    <div id="apparentTemperature"></div>
+    <div id="precipProbability"></div>
+    <div id="windSpeed"></div>
+    <div id="windBearing"></div>
+  </div>
+
+
+  <div class="location-info">
+    <div id="location"></div>
+  </div>
+  <div id="selectedUnits" value="si"></div>
+
+</div>
+
+
+
+
 </body>
 </html>

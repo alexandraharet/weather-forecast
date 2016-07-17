@@ -1,39 +1,30 @@
 $(document).ready(function(){
 
-  var coordinates;
+  $('#myButton').click(function(event){
+    event.preventDefault();
 
-  $('#myButton').click(function(e){
-    var latitude = "";
-    var longitude = "";
-    e.preventDefault();
-
-    // get latitude, longitude for selected city
+    // gets latitude, longitude for address entered
     $.ajax({
       url: 'php/coordinates.php',
       type: 'GET',
-      data: {cityName: $('#address').val()},
+      data: {address: $('#address').val()},
       dataType: 'json',
       success: function(data) {
-        stringCoordinates(data);
+        getLatLng(data);
     },
       error: function(xhr, desc, err) {
         console.log(xhr);
         console.log("Details: " + desc + "\nError:" + err);
       }
     });
-
-
-
-    getDivIdsFromHtml('weather');
   });
 
-  // console.log(coordinates);
+  var getLatLng = function (data) {
+    var latitude = data.results[0].geometry.location.lat;
+    var longitude = data.results[0].geometry.location.lng;
+    parseAndRenderLocation('location-info', data);
 
-  var stringCoordinates = function (data) {
-    latitude = data.results[0].geometry.location.lat;
-    longitude = data.results[0].geometry.location.lng;
-//    coordinates = latitude + "," + longitude;
-    // get weather from forecast.io
+    // gets weather information for [location] from forecast.io
     $.ajax({
       url: 'php/forecast.php',
       type: 'GET',
@@ -41,16 +32,16 @@ $(document).ready(function(){
              lon: longitude},
       dataType: 'json',
       success: function(data) {
-        parseAndRender('weather', data);
+        getDivIdsFromHtml('currently');
+        parseAndRenderWeather('currently', data);
       },
       error: function(xhr, desc, err) {
         console.log(xhr);
         console.log("Details: " + desc + "\nError:" + err);
       }
     });
-//    return coordinates;
-  }
-
+}
+  // gets div ids from HMTL, to determine which data must be retrieved from the two APIs used
   var getDivIdsFromHtml = function (myClass) {
     classDivId = [];
     $('.'+ myClass).children('div').each(function() {
@@ -59,45 +50,22 @@ $(document).ready(function(){
     return classDivId;
   }
 
-  var parseAndRender = function (myClass, data) {
+  // renders the location information for the address entered
+  var parseAndRenderLocation = function (myClass, data) {
+    var divs = getDivIdsFromHtml(myClass);
+    $.each(divs, function (key, value) {
+        $("#" + value).html("Location: " + data.results[0].formatted_address);
+    })
+  }
+
+  // renders the weather data for the address entered
+  var parseAndRenderWeather = function (myClass, data) {
     var divs = getDivIdsFromHtml(myClass);
     $.each(divs, function (key, value) {
       if (value == "icon") {
-        switch(data.currently.icon) {
-          case "clear-day":
-            $("#" + value).html('<img src="https://cdn0.iconfinder.com/data/icons/good-weather-1/96/weather_icons-01-128.png" />');
-            break;
-          case "clear-night":
-            $("#" + value).html('<img src="https://cdn0.iconfinder.com/data/icons/good-weather-1/96/weather_icons-05-128.png" />');
-            break;
-          case "rain":
-            $("#" + value).html('<img src="https://cdn0.iconfinder.com/data/icons/good-weather-1/96/weather_icons-36-128.png" />');
-            break;
-          case "snow":
-            $("#" + value).html('<img src="https://cdn0.iconfinder.com/data/icons/good-weather-1/96/weather_icons-68-128.png" />');
-            break;
-          case "sleet":
-            $("#" + value).html('<img src="https://cdn0.iconfinder.com/data/icons/good-weather-1/96/weather_icons-52-128.png" />');
-            break;
-          case "wind":
-            $("#" + value).html('<img src="https://cdn0.iconfinder.com/data/icons/good-weather-1/96/weather_icons-58-128.png" />');
-            break;
-          case "fog":
-            $("#" + value).html('<img src="https://cdn0.iconfinder.com/data/icons/good-weather-1/96/weather_icons-39-128.png" />');
-            break;
-          case "cloudy":
-            $("#" + value).html('<img src="https://cdn0.iconfinder.com/data/icons/good-weather-1/96/weather_icons-16-128.png" />');
-            break;
-          case "partly-cloudy-day":
-            $("#" + value).html('<img src="https://cdn0.iconfinder.com/data/icons/good-weather-1/96/weather_icons-17-128.png" />');
-            break;
-          case "partly-cloudy-night":
-            $("#" + value).html('<img src="https://cdn0.iconfinder.com/data/icons/good-weather-1/96/weather_icons-18-128.png" />');
-            break;
-          default:
-            $("#" + value).html('<img src="https://cdn0.iconfinder.com/data/icons/good-weather-1/96/weather_icons-18-128.png" />');
-          }
-        }
+        var weatherIs = data.currently.icon;
+        $("#icon").html('<img src="img/' + weatherIs + '.png" alt="' + weatherIs + '" width="120" height="120" />');
+      }
 
       else if (value == "temperature") {
         temperature = ((data.currently[value]) - 32) * 5 / 9;
@@ -107,8 +75,3 @@ $(document).ready(function(){
     })
   }
 });
-
-
-
-
-//
