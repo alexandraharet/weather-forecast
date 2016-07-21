@@ -1,12 +1,4 @@
-body {
-  font-family: Calibri;
-}
 
-h1 {
-
-}
-.weather-info {
-}
 
 #location {
   font-weight:bold;
@@ -14,7 +6,7 @@ h1 {
 
 #icon {
   float: left;
-  width: 50%;
+  width: 100%;
 }
 
 .search-button {
@@ -27,35 +19,30 @@ h1 {
 }
 
 .box {
-  width: 300px;
-  height: 400px;
-  padding: 30px;
   border-radius: 10px;
-  margin: 10px;
+  padding: 15px;
+  margin: 15px;
+  max-width: 650px;
   background: #D1F2EB;
   background: linear-gradient(#A3E4D7, #D1F2EB, #A3E4D7);
 }
 
-.day {
-  background-color: #AED6F1;
+.currently {
+
 }
 
 .night {
-  background-color: #34495E;
+  background: linear-gradient(#2C3E50, #808B96, #2C3E50);
+  color: #fff;
 }
 
-.location-info {
-
+.viewpanel {
+  border-radius: 5px;
+  padding-top: 2px;
+  padding-bottom: 15px;
+  margin-top: 20px;
 }
 
-#currently {
-
-}
-
-#hourly {
-
-}
-
-#daily {
-
+.day {
+  background: linear-gradient(#EAECEE, #FFFFFF, #EAECEE);
 }
