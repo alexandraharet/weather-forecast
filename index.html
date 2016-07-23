@@ -32,7 +32,12 @@
 					</div>
 
 					<div class="row">
-						<div class="col-lg-12" id="selectedUnits" value="si"></div>
+						<div class="col-lg-12">
+							<form id="selectedUnits" action="">
+						  	<input type="radio" name="units" value="si" checked="checked">°C
+						  	<input type="radio" name="units" value="us">°F
+							</form>
+						</div>
 					</div>
 
 					<div class="row js-hiddenContent">
@@ -45,7 +50,7 @@
 								<div>Feels like: <span id="apparentTemperature"></span></div>
 								<div>Chance of precipitation: <span id="precipProbability"></span></div>
 								<div>Wind speed: <span id="windSpeed"></span></div>
-								<div>Wind direction: <span id="windBearing"></span></div>
+<!-- TO DO					<div>Wind direction: <span id="windBearing"></span></div> -->
 							</div>
 						</div>
 
