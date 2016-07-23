@@ -2,7 +2,7 @@ $(document).ready(function(){
 
   $('#myButton').click(function(event){
     event.preventDefault();
-
+    setTimeout(displayDivs, 1000, 'viewpanel');
     // gets latitude, longitude for address entered
     $.ajax({
       url: 'php/coordinates.php',
@@ -19,6 +19,9 @@ $(document).ready(function(){
     });
   });
 
+  var displayDivs = function (myClass) {
+    $("." + myClass).fadeIn(300);
+  }
   var getLatLng = function (data) {
     var latitude = data.results[0].geometry.location.lat;
     var longitude = data.results[0].geometry.location.lng;
@@ -32,12 +35,12 @@ $(document).ready(function(){
         lon: longitude},
         dataType: 'json',
         success: function(data) {
-          getDivIdsFromHtml('currently');
-          parseAndRenderWeatherCurrently('currently', data);
-          getDivIdsFromHtml('tonight');
-          parseAndRenderWeather('tonight', data);
-          getDivIdsFromHtml('tomorrow');
-          parseAndRenderWeather('tomorrow', data);
+          getDivIdsFromHtml('js-currently');
+          parseAndRenderWeatherCurrently('js-currently', data);
+          getDivIdsFromHtml('js-tonight');
+          parseAndRenderWeather('js-tonight', data);
+          getDivIdsFromHtml('js-tomorrow');
+          parseAndRenderWeather('js-tomorrow', data);
         },
         error: function(xhr, desc, err) {
           console.log(xhr);
@@ -48,7 +51,7 @@ $(document).ready(function(){
     // gets div ids from HMTL, to determine which data must be retrieved from the two APIs used
     var getDivIdsFromHtml = function (myClass) {
       classDivId = [];
-      $('.'+ myClass).children('div').each(function() {
+      $('.'+ myClass + " span").each(function() {
         classDivId.push($(this).attr('id'));
       });
       return classDivId;
@@ -57,23 +60,24 @@ $(document).ready(function(){
     // renders the location information for the address entered
     var parseAndRenderLocation = function (myClass, data) {
       var divs = getDivIdsFromHtml(myClass);
-      $.each(divs, function (key, value) {
-        $("#" + value).html("Location: " + data.results[0].formatted_address);
+      $.each(divs, function (k, v) {
+        $("#" + v).html("Location: " + data.results[0].formatted_address);
       })
     }
 
     // renders the weather data for the address entered
     var parseAndRenderWeatherCurrently = function (myClass, data) {
       var divs = getDivIdsFromHtml(myClass);
-      $.each(divs, function (key, value) {
-        if (value == "icon") {
+      $.each(divs, function (k, v) {
+        if (v == "icon") {
           $("." + myClass + " #icon").html('<img src="img/' + data.currently.icon + '.png" alt="' + data.currently.icon + '"  />');
         }
-        else if (value == "temperature") {
-          temperature = ((data.currently[value]) - 32) * 5 / 9;
-          $("." + myClass + " #" + value).html(value + ": " + temperature.toFixed(0) + " °C");
+        else if (v == "temperature" || v == "apparentTemperature") {
+          // attribute = v;
+          attribute = ((data.currently[v]) - 32) * 5 / 9;
+          $("." + myClass + " #" + v).html(attribute.toFixed(0) + " °C"); //todo
         }
-        else $("." + myClass + " #" + value).html(value + ": " + data.currently[value]);
+        else $("." + myClass + " #" + v).html(data.currently[v]);
       })
     }
 
@@ -81,17 +85,18 @@ $(document).ready(function(){
     var parseAndRenderWeather = function (myClass, data) {
       var divs = getDivIdsFromHtml(myClass);
       var d = new Date(data.currently.time * 1000);
-      if (myClass == "tonight") dataIndex = 24 - d.getHours() + data.offset;
-      else if (myClass == "tomorrow") dataIndex = 36 - d.getHours() + data.offset;
-      $.each(divs, function (key, value) {
-        if (value == "icon") {
+      if (myClass == "js-tonight") dataIndex = 24 - d.getHours() + data.offset;
+      else if (myClass == "js-tomorrow") dataIndex = 36 - d.getHours() + data.offset;
+      $.each(divs, function (k, v) {
+        if (v == "icon") {
           $("." + myClass + " #icon").html('<img src="img/' + data.hourly.data[dataIndex].icon + '.png" alt="' + data.hourly.data[dataIndex].icon + '"  />');
         }
-        else if (value == "temperature") {
-          temperature = ((data.hourly.data[dataIndex][value]) - 32) * 5 / 9;
-          $("." + myClass + " #" + value).html(value + ": " + temperature.toFixed(0) + " °C");
+        else if (v == "temperature" || v == "apparentTemperature") {
+          // attribute = v;
+          attribute = ((data.hourly.data[dataIndex][v]) - 32) * 5 / 9;
+          $("." + myClass + " #" + v).html(attribute.toFixed(0) + " °C");
         }
-        else $("." + myClass + " #" + value).html(value + ": " + data.hourly.data[dataIndex][value]);
+        else $("." + myClass + " #" + v).html(data.hourly.data[dataIndex][v]);
       })
     }
 
