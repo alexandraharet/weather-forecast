@@ -1,5 +1,4 @@
 
-
 #location {
   font-weight:bold;
 }
@@ -41,6 +40,11 @@
   padding-top: 2px;
   padding-bottom: 15px;
   margin-top: 20px;
+  height: 100%;
+}
+
+.evenBox {
+  min-height: 100%;
 }
 
 .day {

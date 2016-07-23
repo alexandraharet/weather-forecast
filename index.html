@@ -10,74 +10,78 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="js/jquery.equalheights.js"></script>
 	<script type="text/javascript" src="js/ajax.js"></script>
 </head>
 
 <body>
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12">
-			<div class="box">
-				<h2>Weather forecast</h2>
+				<div class="box">
+					<h2>Weather forecast</h2>
 
-				<form action = "" name="address">
-					<p>Type in an address</p>
-					<input type="text" name="inputaddress" id="address">
-					<button type="submit" id="myButton" class="search-button"><img src="img/search-icon.png" style="height: 15px; width: 15px;"></button>
-				</form>
+					<form action = "" name="address">
+						<p>Type in an address</p>
+						<input type="text" name="inputaddress" id="address">
+						<button type="submit" id="myButton" class="search-button"><img src="img/search-icon.png" style="height: 15px; width: 15px;"></button>
+					</form>
 
-			<div class="row">
-				<div class="col-lg-12" id="selectedUnits" value="si"></div>
+					<div class="location-info">
+						<div id="location"></div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-12" id="selectedUnits" value="si"></div>
+					</div>
+
+					<div class="row weatherBoxes">
+						<div class="col-sm-4 evenBox">
+							<div class="col-lg-12 js-currently day viewpanel" style="display: none;">
+								<div class="viewtitle"><h3>Right now</h3></div>
+								<div><span id="icon"></span></div>
+								<div><span id="summary"></span></div>
+								<div>Temperature: <span id="temperature"></span></div>
+								<div>Feels like: <span id="apparentTemperature"></span></div>
+								<div>Chance of precipitation: <span id="precipProbability"></span></div>
+								<div>Wind speed: <span id="windSpeed"></span></div>
+								<div>Wind direction: <span id="windBearing"></span></div>
+							</div>
+						</div>
+
+						<div class="col-sm-4 evenBox">
+							<div class="col-lg-12 js-tonight night viewpanel" style="display: none;">
+								<div class="viewtitle"><h3>Tonight</h3></div>
+								<div><span id="icon"></span></div>
+								<div><span id="summary"></span></div>
+								<div>Temperature: <span id="temperature"></span></div>
+								<div>Feels like: <span id="apparentTemperature"></span></div>
+								<div>Chance of precipitation: <span id="precipProbability"></span></div>
+								<div>Wind speed: <span id="windSpeed"></span></div>
+								<div>Wind direction: <span id="windBearing"></span></div>
+							</div>
+						</div>
+
+						<div class="col-sm-4 evenBox">
+							<div class="col-lg-12 js-tomorrow day viewpanel" style="display: none;">
+								<div class="viewtitle"><h3>Tomorrow</h3></div>
+								<div><span id="icon"></span></div>
+								<div><span id="summary"></span></div>
+								<div>Temperature: <span id="temperature"></span></div>
+								<div>Feels like: <span id="apparentTemperature"></span></div>
+								<div>Chance of precipitation: <span id="precipProbability"></span></div>
+								<div>Wind speed: <span id="windSpeed"></span></div>
+								<div>Wind direction: <span id="windBearing"></span></div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
 			</div>
 
-			<div class="row">
-				<div class="col-sm-4">
-					<div class="col-lg-12 currently day viewpanel">
-					<div class="viewtitle"><h3>Right now</h3></div>
-					<div id="icon"></div>
-					<div id="summary"></div>
-					<div id="temperature"></div>
-					<div id="apparentTemperature"></div>
-					<div id="precipProbability"></div>
-					<div id="windSpeed"></div>
-					<div id="windBearing"></div>
-				</div></div>
-
-				<div class="col-sm-4">
-					<div class="col-lg-12 tonight night viewpanel">
-					<div class="viewtitle"><h3>Tonight</h3></div>
-					<div id="icon"></div>
-					<div id="summary"></div>
-					<div id="temperature"></div>
-					<div id="apparentTemperature"></div>
-					<div id="precipProbability"></div>
-					<div id="windSpeed"></div>
-					<div id="windBearing"></div>
-				</div></div>
-
-				<div class="col-sm-4">
-					<div class="col-lg-12 viewpanel tomorrow day">
-					<div class="viewtitle"><h3>Tomorrow</h3></div>
-					<div id="icon"></div>
-					<div id="summary"></div>
-					<div id="temperature"></div>
-					<div id="apparentTemperature"></div>
-					<div id="precipProbability"></div>
-					<div id="windSpeed"></div>
-					<div id="windBearing"></div>
-				</div></div>
-
-			</div>
-
-			<div class="location-info">
-				<div id="location"></div>
-			</div>
 
 		</div>
 	</div>
-
-
-	</div>
-</div>
 </body>
 </html>
