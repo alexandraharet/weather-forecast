@@ -2,8 +2,9 @@ $(document).ready(function(){
 
   $('#myButton').click(function(event){
     event.preventDefault();
-    setTimeout(displayDivs, 1000, 'viewpanel');
-    // gets latitude, longitude for address entered
+    $("#myButton").focus();
+    setTimeout(displayDivs, 1000, 'js-hiddenContent');
+    // First ajax call gets latitude, longitude for address entered
     $.ajax({
       url: 'php/coordinates.php',
       type: 'GET',
@@ -21,6 +22,7 @@ $(document).ready(function(){
 
   var displayDivs = function (myClass) {
     $("." + myClass).fadeIn(300);
+    $(".viewpanel").matchHeight();
   }
   var getLatLng = function (data) {
     var latitude = data.results[0].geometry.location.lat;
@@ -61,7 +63,7 @@ $(document).ready(function(){
     var parseAndRenderLocation = function (myClass, data) {
       var divs = getDivIdsFromHtml(myClass);
       $.each(divs, function (k, v) {
-        $("#" + v).html("Location: " + data.results[0].formatted_address);
+        $("#" + v).html(data.results[0].formatted_address);
       })
     }
 
@@ -81,7 +83,6 @@ $(document).ready(function(){
       })
     }
 
-
     var parseAndRenderWeather = function (myClass, data) {
       var divs = getDivIdsFromHtml(myClass);
       var d = new Date(data.currently.time * 1000);
@@ -92,7 +93,6 @@ $(document).ready(function(){
           $("." + myClass + " #icon").html('<img src="img/' + data.hourly.data[dataIndex].icon + '.png" alt="' + data.hourly.data[dataIndex].icon + '"  />');
         }
         else if (v == "temperature" || v == "apparentTemperature") {
-          // attribute = v;
           attribute = ((data.hourly.data[dataIndex][v]) - 32) * 5 / 9;
           $("." + myClass + " #" + v).html(attribute.toFixed(0) + " °C");
         }
