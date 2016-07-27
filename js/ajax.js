@@ -4,14 +4,12 @@ $(document).ready(function(){
       systemName: "us",
       temperature: "°F",
       speed: "mph",
-      distance: "mi.",
-      precipitation: "%"},
+      distance: "mi." },
       si: {
         systemName: "si",
         temperature: "°C",
-        speed: "m/s",
-        distance: "km",
-        precipitation: "%" }
+        speed: "km/h",
+        distance: "km" }
       };
       var currentUnitSystem = units[$("input[name='units']:checked").val()];
       var currentWeatherData;
@@ -31,7 +29,7 @@ $(document).ready(function(){
         if ($('#address').val() === "")
           return;
         $("#myButton").focus();
-        setTimeout(displayDivs, 1000, 'js-hiddenContent');
+        setTimeout(displayDivs, 1500, 'js-hiddenContent');
         /* First ajax call gets latitude, longitude for address entered */
         $.ajax({
           url: 'php/coordinates.php',
@@ -84,7 +82,7 @@ $(document).ready(function(){
 
         var renderWeatherInfo = function(data) {
           getDivIdsFromHtml('js-currently');
-          parseAndRenderWeatherCurrently('js-currently', data);
+          parseAndRenderWeather('js-currently', data);
           getDivIdsFromHtml('js-tonight');
           parseAndRenderWeather('js-tonight', data);
           getDivIdsFromHtml('js-tomorrow');
@@ -103,42 +101,60 @@ $(document).ready(function(){
         /* renders the location information for the address entered */
         var parseAndRenderLocation = function (myClass, data) {
           var divs = getDivIdsFromHtml(myClass);
-          $.each(divs, function (k, v) {
-            $("#" + v).html(data.results[0].formatted_address);
+          $.each(divs, function (key, value) {
+            $("#" + value).html(data.results[0].formatted_address);
           })
         }
-
-        /* renders the weather data for the address entered */
-        var parseAndRenderWeatherCurrently = function (myClass, data) {
-          var divs = getDivIdsFromHtml(myClass);
-          $.each(divs, function (k, v) {
-            if (v == "icon") {
-              $("." + myClass + " #icon").html('<img src="img/' + data.currently.icon + '.png" alt="' + data.currently.icon + '"  />');
-            }
-            else if (v == "temperature" || v == "apparentTemperature") {
-              // attribute = v;
-              attribute = (data.currently[v]);
-              $("." + myClass + " #" + v).html(attribute.toFixed(0) + " " + currentUnitSystem.temperature);
-            }
-            else $("." + myClass + " #" + v).html(data.currently[v]);
-          })
-        };
 
         var parseAndRenderWeather = function (myClass, data) {
           var divs = getDivIdsFromHtml(myClass);
           var d = new Date(data.currently.time * 1000);
-          if (myClass == "js-tonight") dataIndex = 24 - d.getHours() + data.offset;
-          else if (myClass == "js-tomorrow") dataIndex = 36 - d.getHours() + data.offset;
-          $.each(divs, function (k, v) {
-            if (v == "icon") {
-              $("." + myClass + " #icon").html('<img src="img/' + data.hourly.data[dataIndex].icon + '.png" alt="' + data.hourly.data[dataIndex].icon + '"  />');
+          if (myClass === "js-currently") str = "currently";
+          else if (myClass === "js-tonight") {
+            dataIndex = 24 - d.getHours() + Math.abs(data.offset);
+            str = "hourly.data." + dataIndex;
+          }
+          else if (myClass === "js-tomorrow") {
+            dataIndex = 36 - d.getHours() + Math.abs(data.offset);
+            str = "hourly.data." + dataIndex;
+          }
+          $.each(divs, function(key, value) {
+            dataPoint = str + "." + value;
+            switch(value) {
+              case "icon":
+                $("." + myClass + " #icon").html('<img src="img/' + Object.byString(data, dataPoint) + '.png" alt="' + Object.byString(data, dataPoint) + '"  />');
+                break;
+              case "temperature":
+              case "apparentTemperature":
+                attribute = Object.byString(data, dataPoint);
+                $("." + myClass + " #" + value).html(attribute.toFixed(0) + " " + currentUnitSystem.temperature);
+                break;
+              case "precipProbability":
+                attribute = Math.round(Object.byString(data, dataPoint) * 100);
+                $("." + myClass + " #" + value).html(attribute + "%");
+                break;
+              case "windSpeed":
+                attribute = Math.round(Object.byString(data, dataPoint));
+                if (currentUnitSystem.systemName === "si") attribute = Math.round(attribute * 3.6); // transforms speed from m/s to km/h
+                $("." + myClass + " #" + value).html(attribute + " " + currentUnitSystem.speed);
+                break;
             }
-            else if (v == "temperature" || v == "apparentTemperature") {
-              attribute = data.hourly.data[dataIndex][v];
-              $("." + myClass + " #" + v).html(attribute.toFixed(0) + " " + currentUnitSystem.temperature);
-            }
-            else $("." + myClass + " #" + v).html(data.hourly.data[dataIndex][v]);
           })
         };
+
+        Object.byString = function(o, s) {
+          s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+          s = s.replace(/^\./, '');           // strip a leading dot
+          var a = s.split('.');
+          for (var i = 0, n = a.length; i < n; ++i) {
+              var k = a[i];
+              if (k in o) {
+                  o = o[k];
+              } else {
+                  return;
+              }
+          }
+          return o;
+      }
 
       });
