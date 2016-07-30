@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
   var units = {
     us: {
       systemName: "us",
@@ -14,6 +15,8 @@ $(document).ready(function(){
       var currentUnitSystem = units[$("input[name='units']:checked").val()];
       var currentWeatherData;
       var location = {};
+      var locationTime;
+
 
       /* onclick callback for the temperature filter */
       var options = $("form[id=selectedUnits] > input");
@@ -81,45 +84,46 @@ $(document).ready(function(){
         }
 
         var renderWeatherInfo = function(data) {
-          getDivIdsFromHtml('js-currently');
+          getSpanIdsFromHtml('js-currently');
           parseAndRenderWeather('js-currently', data);
-          getDivIdsFromHtml('js-tonight');
+          getSpanIdsFromHtml('js-tonight');
           parseAndRenderWeather('js-tonight', data);
-          getDivIdsFromHtml('js-tomorrow');
+          getSpanIdsFromHtml('js-tomorrow');
           parseAndRenderWeather('js-tomorrow', data);
+
         }
 
-        /* gets div ids from HMTL, to determine which data must be retrieved from the two APIs used */
-        var getDivIdsFromHtml = function (myClass) {
-          classDivId = [];
+        /* gets span ids from HMTL, to determine which data must be retrieved from the two APIs used */
+        var getSpanIdsFromHtml = function (myClass) {
+          classSpanId = [];
           $('.'+ myClass + " span").each(function() {
-            classDivId.push($(this).attr('id'));
+            classSpanId.push($(this).attr('id'));
           });
-          return classDivId;
+          return classSpanId;
         }
 
         /* renders the location information for the address entered */
         var parseAndRenderLocation = function (myClass, data) {
-          var divs = getDivIdsFromHtml(myClass);
-          $.each(divs, function (key, value) {
-            $("#" + value).html(data.results[0].formatted_address);
-          })
-        }
+          $("#location").html(data.results[0].formatted_address);
+          }
 
         var parseAndRenderWeather = function (myClass, data) {
-          var divs = getDivIdsFromHtml(myClass);
-          var d = new Date(data.currently.time * 1000);
+          var divs = getSpanIdsFromHtml(myClass);
+          var utcTime = moment().tz("Etc/UTC");
+          locationTime = utcTime.tz(data.timezone).format("HH:mm:ss DD/MM/YYYY");
+          $("#locationTime").html(locationTime);
+          var t = utcTime.tz(data.timezone).format("H"); // displays only the hour in conversted timezone, in 24h format, one digit only (e.g.: ommits 0 for times before 10am)
           if (myClass === "js-currently") str = "currently";
           else if (myClass === "js-tonight") {
-            dataIndex = 24 - d.getHours() + Math.abs(data.offset);
+            dataIndex = 24 - t;
             str = "hourly.data." + dataIndex;
           }
           else if (myClass === "js-tomorrow") {
-            dataIndex = 36 - d.getHours() + Math.abs(data.offset);
+            dataIndex = 36 - t;
             str = "hourly.data." + dataIndex;
           }
           $.each(divs, function(key, value) {
-            dataPoint = str + "." + value;
+            dataPoint = str + "[" + value + "]";
             switch(value) {
               case "icon":
                 $("." + myClass + " #icon").html('<img src="img/' + Object.byString(data, dataPoint) + '.png" alt="' + Object.byString(data, dataPoint) + '"  />');

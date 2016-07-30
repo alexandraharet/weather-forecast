@@ -11,6 +11,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.5/moment-timezone-with-data.min.js"></script>
 	<script type="text/javascript" src="js/ajax.js"></script>
 </head>
 
@@ -27,8 +29,8 @@
 						<button type="submit" id="myButton" class="search-button"><img src="img/search-icon.png" style="height: 15px; width: 15px;"></button>
 					</form>
 
-					<div class="location-info js-hiddenContent">
-						<div>Showing weather for: <span id="location"></span></div>
+					<div class="js-hiddenContent">
+						<div class="location-info">Local time in <span id="location"></span> is <span id="locationTime"></span></div>
 					</div>
 
 					<div class="row">
@@ -81,9 +83,14 @@
 						</div>
 
 					</div>
-
 				</div>
+
+				<div style="max-width: 650px;">
+						<p style="font-size: 9px; font-color: gray; text-align: left; padding: 0px 0 0 20px;">View <a href="https://github.com/alexandraharet/weather-forecast" target="_blank">project on GitHub</a></p>
+					</div>
+
 			</div>
+
 
 
 		</div>
