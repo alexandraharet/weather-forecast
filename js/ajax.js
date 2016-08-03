@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+  // if (viewport.is('xs')
+
   var units = {
     us: {
       systemName: "us",
@@ -31,7 +33,8 @@ $(document).ready(function(){
         event.preventDefault();
         if ($('#address').val() === "")
           return;
-        $("#myButton").focus();
+          document.activeElement.blur();
+        // $(".box").focus();
         setTimeout(displayDivs, 1500, 'js-hiddenContent');
         /* First ajax call gets latitude, longitude for address entered */
         $.ajax({
@@ -101,7 +104,13 @@ $(document).ready(function(){
           });
           return classSpanId;
         }
-
+/*
+        var realignIconElements = function() {
+          $('#icon').each(function() {
+            $(this).css("text-align", "left");
+          })
+        }
+*/
         /* renders the location information for the address entered */
         var parseAndRenderLocation = function (myClass, data) {
           $("#location").html(data.results[0].formatted_address);

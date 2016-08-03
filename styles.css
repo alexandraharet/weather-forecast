@@ -3,15 +3,19 @@
   font-weight:bold;
 }
 
+.col-xs-5 {
+  min-width: 275px !important;
+}
+
+#address {
+  max-width:75%;
+}
+
+
 #icon {
   display: block;
   width: 70%;
-  text-align: center;
-}
-
-col-sm-4 #icon {
-  display: inline-block;;
-  float: left;
+  text-align: left;
 }
 
 
@@ -21,11 +25,13 @@ col-sm-4 #icon {
 
 .search-button {
   border: 0px;
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
   float: left;
   position: absolute;
   background: none;
+  padding: 0px;
+  margin: 0px;
 }
 
 .box {
