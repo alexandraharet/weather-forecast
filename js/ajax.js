@@ -1,7 +1,10 @@
 $(document).ready(function(){
 
+<<<<<<< HEAD
   // if (viewport.is('xs')
 
+=======
+>>>>>>> a1af9de77f67e5b8a2a3fa4745af1db8760acadd
   var units = {
     us: {
       systemName: "us",
@@ -33,8 +36,12 @@ $(document).ready(function(){
         event.preventDefault();
         if ($('#address').val() === "")
           return;
+<<<<<<< HEAD
           document.activeElement.blur();
         // $(".box").focus();
+=======
+        $("#myButton").focus();
+>>>>>>> a1af9de77f67e5b8a2a3fa4745af1db8760acadd
         setTimeout(displayDivs, 1500, 'js-hiddenContent');
         /* First ajax call gets latitude, longitude for address entered */
         $.ajax({
