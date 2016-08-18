@@ -104,13 +104,7 @@ $(document).ready(function(){
           });
           return classSpanId;
         }
-/*
-        var realignIconElements = function() {
-          $('#icon').each(function() {
-            $(this).css("text-align", "left");
-          })
-        }
-*/
+
         /* renders the location information for the address entered */
         var parseAndRenderLocation = function (myClass, data) {
           $("#location").html(data.results[0].formatted_address);
