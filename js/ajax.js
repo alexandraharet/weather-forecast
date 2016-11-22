@@ -1,10 +1,5 @@
 $(document).ready(function(){
 
-<<<<<<< HEAD
-  // if (viewport.is('xs')
-
-=======
->>>>>>> a1af9de77f67e5b8a2a3fa4745af1db8760acadd
   var units = {
     us: {
       systemName: "us",
@@ -36,12 +31,7 @@ $(document).ready(function(){
         event.preventDefault();
         if ($('#address').val() === "")
           return;
-<<<<<<< HEAD
-          document.activeElement.blur();
-        // $(".box").focus();
-=======
-        $("#myButton").focus();
->>>>>>> a1af9de77f67e5b8a2a3fa4745af1db8760acadd
+        document.activeElement.blur();
         setTimeout(displayDivs, 1500, 'js-hiddenContent');
         /* First ajax call gets latitude, longitude for address entered */
         $.ajax({
@@ -121,15 +111,16 @@ $(document).ready(function(){
           var divs = getSpanIdsFromHtml(myClass);
           var utcTime = moment().tz("Etc/UTC");
           locationTime = utcTime.tz(data.timezone).format("HH:mm:ss DD/MM/YYYY");
+
           $("#locationTime").html(locationTime);
-          var t = utcTime.tz(data.timezone).format("H"); // displays only the hour in conversted timezone, in 24h format, one digit only (e.g.: ommits 0 for times before 10am)
+          var h = utcTime.tz(data.timezone).format("H"); // displays only the hour in conversted timezone, in 24h format, one digit only (e.g.: ommits 0 for times before 10am)
           if (myClass === "js-currently") str = "currently";
           else if (myClass === "js-tonight") {
-            dataIndex = 24 - t;
+            dataIndex = 24 - h;
             str = "hourly.data." + dataIndex;
           }
           else if (myClass === "js-tomorrow") {
-            dataIndex = 36 - t;
+            dataIndex = 36 - h;
             str = "hourly.data." + dataIndex;
           }
           $.each(divs, function(key, value) {
