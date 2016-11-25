@@ -1,3 +1,12 @@
+var timezone;
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $interval) {
+  $scope.theTime = new Date().toLocaleTimeString();
+  $interval(function () {
+      $scope.theTime = new Date().toLocaleTimeString([], {timeZone: timezone});
+  }, 1000);
+});
+
 $(document).ready(function(){
 
   var units = {
@@ -15,7 +24,7 @@ $(document).ready(function(){
       var currentUnitSystem = units[$("input[name='units']:checked").val()];
       var currentWeatherData;
       var location = {};
-      var locationTime;
+      // var locationTime;
 
 
       /* onclick callback for the temperature filter */
@@ -110,9 +119,10 @@ $(document).ready(function(){
         var parseAndRenderWeather = function (myClass, data) {
           var divs = getSpanIdsFromHtml(myClass);
           var utcTime = moment().tz("Etc/UTC");
-          locationTime = utcTime.tz(data.timezone).format("HH:mm:ss DD/MM/YYYY");
+          //locationTime = utcTime.tz(data.timezone).format("HH:mm:ss DD/MM/YYYY");
+          timezone = data.timezone;
 
-          $("#locationTime").html(locationTime);
+          //$("#locationTime").html(locationTime);
           var h = utcTime.tz(data.timezone).format("H"); // displays only the hour in conversted timezone, in 24h format, one digit only (e.g.: ommits 0 for times before 10am)
           if (myClass === "js-currently") str = "currently";
           else if (myClass === "js-tonight") {
