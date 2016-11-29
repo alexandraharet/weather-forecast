@@ -1,9 +1,11 @@
 var timezone;
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope, $interval) {
-  $scope.theTime = new Date().toLocaleTimeString();
+  $scope.theDay = moment().format();
+  $scope.theTime = moment.tz(timezone).format('h:mm:ss A');
+  //$scope.theTime = new Date().toLocaleTimeString([], {timeZone: timezone});
   $interval(function () {
-      $scope.theTime = new Date().toLocaleTimeString([], {timeZone: timezone});
+      $scope.theTime = $scope.theTime = moment.tz(timezone).format('h:mm:ss A');
   }, 1000);
 });
 
