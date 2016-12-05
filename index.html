@@ -15,8 +15,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.5/moment-timezone-with-data.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
-	<script type="text/javascript" src="forecast-ajax.js"></script>
-	<script src="myApp.js"></script>
+	<script type="text/javascript" src="js/ajax.js"></script>
 </head>
 
 <body>
@@ -85,9 +84,10 @@
 
 					<div class="row">
 						<div class="col-lg-12">
-								<div class="location-info js-hiddenContent" ng-app="myApp" ng-controller="myCtrl">
-									<div>Local time in <span id="location"></span> is
-									 {{theTime}}
+								<div class="location-info js-hiddenContent">
+									<div ng-app="myApp" ng-controller="myCtrl">Local time in <span id="location"></span> is
+										{{theTime}}. Have a nice {{ theDay | date: "EEEE" : UTC}}!
+									 <!-- <span id="locationTime"></span> -->
 								</div>
 						</div>
 					</div>
@@ -96,7 +96,7 @@
 				<div style="max-width: 650px;">
 						<p style="font-size: 9px; font-color: gray; text-align: left; padding: 10px 0 0 20px;">
 							View <a href="https://github.com/alexandraharet/weather-forecast" target="_blank">project on GitHub</a> |
-							Powered by <a href="https://darksky.net/poweredby/" target="_blank">Dark Sky</a></p>
+							Forecast API by <a href="https://darksky.net/poweredby/" target="_blank">Dark Sky</a></p>
 					</div>
 			</div>
 
