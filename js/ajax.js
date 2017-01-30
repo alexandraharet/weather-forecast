@@ -11,6 +11,13 @@ app.controller('myCtrl', function($scope, $interval) {
 
 $(document).ready(function(){
 
+    $("html").css({background: function() {
+      var background = "url('img/background-" + (Math.floor(Math.random() * 10) + 1) + ".jpg') no-repeat center center fixed";
+      console.log(background);
+      return background;
+    }
+  });
+
   var units = {
     us: {
       systemName: "us",
@@ -139,7 +146,7 @@ $(document).ready(function(){
             dataPoint = str + "[" + value + "]";
             switch(value) {
               case "icon":
-                $("." + myClass + " #icon").html('<img src="img/' + Object.byString(data, dataPoint) + '.png" alt="' + Object.byString(data, dataPoint) + '"  />');
+                $("." + myClass + " #icon").html('<img src="img/' + Object.byString(data, dataPoint) + '.png" alt="' + Object.byString(data, dataPoint) + '"  style="width: 80px; height: auto; max-width: 100%;" />');
                 break;
               case "temperature":
               case "apparentTemperature":

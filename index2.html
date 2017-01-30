@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Alexandra Haret">
+    <title>Forecast project</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- removing boostrap 3 to be replaced with bootstrap 4
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+-->
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.5/moment-timezone-with-data.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+    <script type="text/javascript" src="js/ajax.js"></script>
+
+<!--  boostrap 4 -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="styles.css">
+
+
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row"><h3>Add description of project here</h3></div>
+        <div class="row">
+            <div class="col-sm-8 col-xs-12">
+                <div class="box">
+                    <h2>Weather forecast</h2>
+
+                    <p>Type in an address as specific as you want</p>
+                    <form name="address" style="display: inline;">
+                        <input type="text" name="inputaddress" id="address" size= "25" autocomplete="off" placeholder="e.g. 41 Portland Street, London">
+                        <button type="submit" id="myButton" class="search-button"><img src="img/search-icon.png" style="height: 15px; width: 15px;"></button>
+                    </form>
+
+                    <span class="js-hiddenContent">
+                        <form id="selectedUnits" class="switch-field">
+                            <input type="radio" name="units" value="si" checked="checked" id="switch_left" />
+                            <label for="switch_left">°C</label>
+                            <input type="radio" name="units" value="us" id="switch_right" />
+                            <label for="switch_right">°F</label>
+                        </form>
+                    </span>
+
+
+                    <div class="row row-eq-height">
+                        <div class="col-sm-12 col-md-4">
+                            <div class="container js-currently day viewpanel">
+                                <div class="viewtitle">Right now</div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-4 col-md-12">
+                                        <span id="icon" class="js-align-left"></span>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-8 col-md-12">
+                                        <div><span id="summary"></span></div>
+                                        <div>Temperature: <span id="temperature"></span></div>
+                                        <div>Feels like: <span id="apparentTemperature"></span></div>
+                                        <div>Chance of precipit.: <span id="precipProbability"></span></div>
+                                        <div>Wind speed: <span id="windSpeed"></span></div>
+                                        <!-- TO DO					<div>Wind direction: <span id="windBearing"></span></div> -->
+                                    </div>
+                                    <div style="clear: both;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-sm-12 col-md-4">
+                            <div class="container js-tonight night viewpanel">
+                                <div class="viewtitle">Tonight</div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-4 col-md-12"><span id="icon" class="js-align-left"></span></div>
+                                    <div class="col-xs-12 col-sm-8 col-md-12">
+                                        <div><span id="summary"></span></div>
+                                        <div>Temperature: <span id="temperature"></span></div>
+                                        <div>Feels like: <span id="apparentTemperature"></span></div>
+                                        <div>Chance of precipit.: <span id="precipProbability"></span></div>
+                                        <div>Wind speed: <span id="windSpeed"></span></div>
+                                        <!--	TO DO							<div>Wind direction: <span id="windBearing"></span></div> -->
+                                    </div>
+                                    <div style="clear: both;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-4">
+                            <div class="container js-tomorrow day viewpanel">
+                                <div class="viewtitle">Tomorrow</div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-4 col-md-12"><span id="icon" class="js-align-left"></span></div>
+                                    <div class="col-xs-12 col-sm-8 col-md-12">
+                                        <div><span id="summary"></span></div>
+                                        <div>Temperature: <span id="temperature"></span></div>
+                                        <div>Feels like: <span id="apparentTemperature"></span></div>
+                                        <div>Chance of precipit.: <span id="precipProbability"></span></div>
+                                        <div>Wind speed: <span id="windSpeed"></span></div>
+                                        <!--	TO DO							<div>Wind direction: <span id="windBearing"></span></div> -->
+                                    </div>
+                                    <div style="clear: both;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="location-info js-hiddenContent">
+                                <div ng-app="myApp" ng-controller="myCtrl">Local time in <span id="location"></span> is
+                                    {{theTime}}. Have a nice {{ theDay | date: "EEEE" : UTC}}!
+                                    <!-- <span id="locationTime"></span> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 650px;">
+                        <p style="font-size: 9px; font-color: gray; text-align: left; padding: 10px 0 0 20px;">
+                            View <a href="https://github.com/alexandraharet/weather-forecast" target="_blank">project on GitHub</a> |
+                            Forecast API by <a href="https://darksky.net/poweredby/" target="_blank">Dark Sky</a></p>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="col-sm-4">
+                    <div>Projhect explained here</div>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
