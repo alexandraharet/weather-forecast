@@ -1,8 +1,8 @@
 <?php
 // api at https://darksky.net/dev/docs
 // max 1000 calls per day
-// object example: https://api.darksky.net/forecast/2cb2a6600011ce4ca629efa9e07cc9bd/55.9533,3.1883
-// object example with EXCLUDE: https://api.darksky.net/forecast/2cb2a6600011ce4ca629efa9e07cc9bd/55.9533,3.1883?exclude=minutely,daily,flags
+// object example: https://api.darksky.net/forecast/YOUR_KEY_HERE/55.9533,3.1883
+// object example with EXCLUDE: https://api.darksky.net/forecastYOUR_KEY_HERE/55.9533,3.1883?exclude=minutely,daily,flags
 
 $api_weather = 'https://api.darksky.net/forecast/';
 $api_key2 = YOUR_KEY_HERE;
