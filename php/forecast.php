@@ -5,7 +5,7 @@
 // object example with EXCLUDE: https://api.darksky.net/forecast/2cb2a6600011ce4ca629efa9e07cc9bd/55.9533,3.1883?exclude=minutely,daily,flags
 
 $api_weather = 'https://api.darksky.net/forecast/';
-$api_key2 = '2cb2a6600011ce4ca629efa9e07cc9bd';
+$api_key2 = YOUR_KEY_HERE;
 $latitude = $_GET['lat'];
 $longitude = $_GET['lon'];
 $units = $_GET['units'];
