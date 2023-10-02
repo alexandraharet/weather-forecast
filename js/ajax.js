@@ -144,6 +144,7 @@ $(document).ready(function(){
               case "temperature":
               case "apparentTemperature":
                 attribute = Object.byString(data, dataPoint);
+                if (currentUnitSystem.systemName === "si") attribute = Math.round((attribute - 32)/1.8); // transforms temperature from F to C
                 $("." + myClass + " #" + value).html(attribute.toFixed(0) + " " + currentUnitSystem.temperature);
                 break;
               case "precipProbability":
